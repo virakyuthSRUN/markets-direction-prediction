@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+.env
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# Generated / intermediate data files
+# (run Notebook 01 to regenerate sp500_processed.csv)
+data/sp500_processed.csv
+
+# Raw dataset (downloaded separately – see README)
+# data/sp500_index.csv   ← uncomment if you do NOT want to track the Kaggle CSV
+
+# macOS & editors
+.DS_Store
+.idea/
+.vscode/
+*.swp

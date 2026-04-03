@@ -1,0 +1,22 @@
+# Core data science
+numpy>=1.24
+pandas>=2.0
+scipy>=1.10
+
+# Visualisation
+matplotlib>=3.7
+seaborn>=0.12
+
+# Statistical modelling
+statsmodels>=0.14
+
+# Machine learning
+scikit-learn>=1.3
+
+# Jupyter environment
+jupyter>=1.0
+notebook>=7.0
+ipykernel>=6.0
+
+# Data acquisition fallback (used when Kaggle CSV is absent)
+yfinance>=0.2
