@@ -9,11 +9,33 @@ import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 
-# Expected Kaggle CSV filename (place this file in data/)
-KAGGLE_CSV = os.path.join(DATA_DIR, "sp500_index.csv")
+# ── Asset selection ────────────────────────────────────────────────────────
+# Choose one key: sp500, nasdaq, gold, silver
+ASSET_KEY = "sp500"
 
-# Fallback: yfinance ticker symbol used when the CSV is absent
-YFINANCE_TICKER = "^GSPC"
+ASSET_SETTINGS = {
+	"sp500": {"name": "S&P 500", "ticker": "^GSPC", "code": "sp500"},
+	"nasdaq": {"name": "Nasdaq", "ticker": "^IXIC", "code": "nasdaq"},
+	"gold": {"name": "Gold", "ticker": "GC=F", "code": "gold"},
+	"silver": {"name": "Silver", "ticker": "SI=F", "code": "silver"},
+}
+
+if ASSET_KEY not in ASSET_SETTINGS:
+	raise ValueError(f"Unsupported ASSET_KEY: {ASSET_KEY}")
+
+ASSET_NAME = ASSET_SETTINGS[ASSET_KEY]["name"]
+ASSET_TICKER = ASSET_SETTINGS[ASSET_KEY]["ticker"]
+ASSET_CODE = ASSET_SETTINGS[ASSET_KEY]["code"]
+
+# Optional local CSV path for the selected asset (if present)
+RAW_DATA_CSV = os.path.join(DATA_DIR, f"{ASSET_CODE}_index.csv")
+
+# Backward-compatible aliases used by older notebook cells
+KAGGLE_CSV = RAW_DATA_CSV
+YFINANCE_TICKER = ASSET_TICKER
+
+# Processed feature dataset consumed by notebooks 02-09
+PROCESSED_DATA_CSV = os.path.join(DATA_DIR, f"{ASSET_CODE}_processed.csv")
 
 # ── Date range ─────────────────────────────────────────────────────────────
 START_DATE = "2010-01-01"

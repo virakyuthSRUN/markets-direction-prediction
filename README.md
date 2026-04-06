@@ -119,7 +119,7 @@ jupyter notebook
 ```
 
 Open and run notebooks `01` through `09` in sequence.  
-**Important:** Notebook 01 must be run first — it saves `data/sp500_processed.csv` which all subsequent notebooks load.
+**Important:** Notebook 01 must be run first — it saves `data/{asset_code}_processed.csv` (for example `sp500_processed.csv`, `nasdaq_processed.csv`, `gold_processed.csv`, `silver_processed.csv`) which all subsequent notebooks load via `config.PROCESSED_DATA_CSV`.
 
 ---
 
