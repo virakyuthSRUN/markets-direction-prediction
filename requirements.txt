@@ -6,6 +6,10 @@ scipy>=1.10
 # Visualisation
 matplotlib>=3.7
 seaborn>=0.12
+plotly>=5.20
+
+# Web app
+streamlit>=1.36
 
 # Statistical modelling
 statsmodels>=0.14
@@ -19,4 +23,4 @@ notebook>=7.0
 ipykernel>=6.0
 
 # Data acquisition fallback (used when Kaggle CSV is absent)
-yfinance>=0.2
+yfinance>=0.2.58,<1.0

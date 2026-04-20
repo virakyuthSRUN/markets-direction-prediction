@@ -12,7 +12,8 @@ Predict whether the S&P 500 index will **close higher (Up) or lower (Down) than 
 4. [Methods](#methods)
 5. [How to Run](#how-to-run)
 6. [Configuration](#configuration)
-7. [Results Summary](#results-summary)
+7. [Web App](#web-app)
+8. [Results Summary](#results-summary)
 
 ---
 
@@ -44,6 +45,9 @@ Expected CSV columns: `Date`, `Open`, `High`, `Low`, `Close`, `Volume`.
 
 ```
 sp500-direction-prediction/
+├── app.py                         # Streamlit web dashboard
+├── .streamlit/
+│   └── config.toml                # Streamlit theme settings
 ├── config.py                    # All paths, dates & hyperparameters
 ├── requirements.txt             # Python dependencies
 ├── README.md
@@ -58,7 +62,8 @@ sp500-direction-prediction/
     ├── 06_arima.ipynb                     # ARIMA: ADF, ACF/PACF, rolling forecast
     ├── 07_ml_classifiers.ipynb            # Random Forest & SVM classifiers
     ├── 08_pca.ipynb                       # PCA scree, variance, 2-D projection
-    └── 09_bootstrapping.ipynb             # Bootstrap 95% CI for test accuracy
+    ├── 09_bootstrapping.ipynb             # Bootstrap 95% CI for test accuracy
+    └── 10_predictions_only.ipynb          # Multi-horizon forward prediction
 ```
 
 ---
@@ -120,6 +125,52 @@ jupyter notebook
 
 Open and run notebooks `01` through `09` in sequence.  
 **Important:** Notebook 01 must be run first — it saves `data/{asset_code}_processed.csv` (for example `sp500_processed.csv`, `nasdaq_processed.csv`, `gold_processed.csv`, `silver_processed.csv`) which all subsequent notebooks load via `config.PROCESSED_DATA_CSV`.
+
+### 4. Launch the Streamlit web app
+
+```bash
+streamlit run app.py
+```
+
+The web app provides an interactive UI for S&P 500, Nasdaq, Gold, and Silver with daily, weekly, monthly, quarterly, and yearly forecasts.
+
+If you want to deploy it online, the easiest options are:
+
+1. Streamlit Community Cloud.
+2. Hugging Face Spaces.
+3. A container platform such as Render, Railway, or Azure App Service.
+
+For Streamlit Community Cloud, push the repo to GitHub, connect the repository, and set the app entrypoint to `app.py`.
+
+---
+
+## Web App
+
+The Streamlit dashboard (`app.py`) includes:
+
+- Asset selector: S&P 500, Nasdaq, Gold, Silver.
+- Horizon selector: Daily, Weekly, Monthly, Quarterly, Yearly.
+- Forecast tab: live probability gauge and summary metrics.
+- Horizon Comparison tab: one-view comparison across all time horizons.
+- Data tab: latest OHLCV table and CSV download.
+
+### Deploy on Streamlit Community Cloud
+
+1. Push this repository to GitHub.
+2. Go to https://share.streamlit.io and sign in with GitHub.
+3. Click **Create app** and select your repository and branch.
+4. Set **Main file path** to `app.py`.
+5. Keep Python version default (or select 3.11), then deploy.
+
+If your `data/` CSVs are missing in deployment, the app automatically falls back to `yfinance`.
+
+### Deploy on Render or Railway (optional)
+
+Use this start command:
+
+```bash
+streamlit run app.py --server.port $PORT --server.address 0.0.0.0
+```
 
 ---
 
